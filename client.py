@@ -13,8 +13,7 @@ def receive_messages(client_socket):
             if message == "/quit":
                 print("Server disconnected.")
                 break
-            # Print server message on a new line
-            print(f"Server: {message}")
+            print(f"{message}")  # Directly print the message without 'You:'
         except (ConnectionResetError, OSError):
             print("Connection closed by server.")
             break
