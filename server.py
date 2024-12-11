@@ -23,7 +23,7 @@ def handle_client(client_socket, addr):
             if message == "/quit":
                 print(f"{nickname} ({addr}) disconnected.")
                 break
-            print(f"{nickname}: {message}")
+            print(f"{message}")
             # Broadcast message to all other clients
             broadcast(message, addr, nickname)
     except (ConnectionResetError, OSError):
