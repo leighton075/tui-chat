@@ -6,7 +6,6 @@ import threading
 clients = {}  # Dictionary to store clients' socket and nickname
 
 def handle_client(client_socket, addr):
-    """Handle receiving messages from the client."""
     # Ask for the client's nickname
     client_socket.send("Enter your nickname: ".encode('utf-8'))
     nickname = client_socket.recv(1024).decode('utf-8').strip()
@@ -24,7 +23,7 @@ def handle_client(client_socket, addr):
             if message == "/quit":
                 print(f"{nickname} ({addr}) disconnected.")
                 break
-            print(f"{nickname}: {message}")
+            print(f"{message}")
             # Broadcast message to all other clients
             broadcast(message, addr, nickname)
     except (ConnectionResetError, OSError):
@@ -35,7 +34,7 @@ def handle_client(client_socket, addr):
     print(f"Connection with {nickname} ({addr}) closed.")
 
 def broadcast(message, sender_addr, sender_nickname):
-    """Broadcast a message to all clients except the sender."""
+    # Broadcast a message to all clients except the sender.
     for addr, client_info in clients.items():
         if addr != sender_addr:
             try:
