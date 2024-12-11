@@ -9,11 +9,11 @@ def receive_messages(client_socket):
         try:
             message = client_socket.recv(1024).decode('utf-8')
             if not message:
-                break  # Server disconnected
+                break  # If the server doesn't receive the message then it must have disconnected
             if message == "/quit":
                 print("Server disconnected.")
                 break
-            print(f"{message}")  # Directly print the message without 'You:'
+            print(f"{message}")
         except (ConnectionResetError, OSError):
             print("Connection closed by server.")
             break
@@ -34,7 +34,6 @@ def start_client():
 
     # Ask for the user's nickname
     nickname = input("Enter your nickname: ")
-
     # Send the nickname to the server
     client_socket.send(nickname.encode('utf-8'))
 
