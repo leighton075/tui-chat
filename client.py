@@ -1,5 +1,8 @@
-import socket as sock # i dunno why but funny
+#!/usr/bin/env python3
+
+import socket as sock
 import threading
+import sys
 
 def receive_messages(client_socket):
     while True:
@@ -30,6 +33,12 @@ def start_client():
         print("Unable to connect to the server.")
         return
 
+    # Ask for the user's nickname
+    nickname = input("Enter your nickname: ")
+
+    # Send the nickname to the server
+    client_socket.send(nickname.encode('utf-8'))
+
     # Start a thread to handle incoming messages
     client_thread = threading.Thread(target=receive_messages, args=(client_socket,), daemon=True)
     client_thread.start()
@@ -37,14 +46,21 @@ def start_client():
     try:
         while client_thread.is_alive():
             message = input()  # User's input
+            if message.strip() == "":  # Skip empty messages
+                continue
+
             if message == "/quit":
                 print("Closing connection...")
                 client_socket.send(message.encode('utf-8'))
                 break
+
             try:
-                # Print "You: {message}" and send to server
-                print(f"You: {message}")
-                client_socket.send(message.encode('utf-8'))
+                # Clear the previous "You: ..." line
+                sys.stdout.write("\033[F\033[K")  # Moves cursor up and clears the line
+                sys.stdout.flush()
+                # Print the message with the nickname
+                print(f"You: {nickname}: {message}")
+                client_socket.send(f"{nickname}: {message}".encode('utf-8'))
             except (BrokenPipeError, OSError):
                 print("Error: Connection closed by server.")
                 break
