@@ -6,9 +6,9 @@ import threading
 clients = {}  # Dictionary to store clients' socket and nickname
 
 def handle_client(client_socket, addr):
-    # Ask for the client's nickname
+    # Get the nickname from the client.py input then decode it 
     nickname = client_socket.recv(1024).decode('utf-8').strip()
-    if not nickname:  # Set a default nickname if none is provided
+    if nickname.strip() or nickname.isspace():  # Set a default nickname if none is provided
         nickname = f"Client_{addr[1]}"
     
     clients[addr] = {'socket': client_socket, 'nickname': nickname}
