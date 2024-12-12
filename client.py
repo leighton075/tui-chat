@@ -36,7 +36,7 @@ def start_client():
     nickname = input("Enter your nickname: ")
     # Send the nickname to the server
     client_socket.send(nickname.encode('utf-8'))
-    if nickname.strip() or nickname.isspace():  # Set a default nickname if none is provided
+    if nickname.strip() == "" or nickname.isspace() == True:  # Set a default nickname if none is provided
         nickname = "Bro didn't enter a nickname"
     # Start a thread to handle incoming messages
     client_thread = threading.Thread(target=receive_messages, args=(client_socket,), daemon=True)
