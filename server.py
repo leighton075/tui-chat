@@ -7,12 +7,12 @@ clients = {}  # Dictionary to store clients' socket and nickname
 
 def handle_client(client_socket, addr):
     # Ask for the client's nickname
-    client_socket.send("Enter your nickname: ".encode('utf-8'))
+    client_socket.send("Enter laddy nickname: ".encode('utf-8'))
     nickname = client_socket.recv(1024).decode('utf-8').strip()
     if not nickname:  # Set a default nickname if none is provided
         nickname = f"Client_{addr[1]}"
     
-    clients[addr] = {'socket': client_socket, 'nickname': nickname}  # Store the client and nickname
+    clients[addr] = {'socket': client_socket, 'nickname': nickname}
     print(f"{nickname} ({addr}) connected.")
     
     try:
@@ -34,7 +34,6 @@ def handle_client(client_socket, addr):
     print(f"Connection with {nickname} ({addr}) closed.")
 
 def broadcast(message, sender_addr, sender_nickname):
-    # Broadcast a message to all clients except the sender.
     for addr, client_info in clients.items():
         if addr != sender_addr:
             try:
