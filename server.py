@@ -7,7 +7,6 @@ clients = {}  # Dictionary to store clients' socket and nickname
 
 def handle_client(client_socket, addr):
     # Ask for the client's nickname
-    client_socket.send("Enter laddy nickname: ".encode('utf-8'))
     nickname = client_socket.recv(1024).decode('utf-8').strip()
     if not nickname:  # Set a default nickname if none is provided
         nickname = f"Client_{addr[1]}"
