@@ -11,7 +11,7 @@ def handle_client(client_socket, addr):
     if nickname.strip() or nickname.isspace():  # Set a default nickname if none is provided
         nickname = f"Client_{addr[1]}"
     
-    clients[addr] = {'socket': client_socket, 'nickname': nickname}
+    clients[addr] = {'nickname': nickname}
     print(f"{nickname} ({addr}) connected.")
     
     try:
